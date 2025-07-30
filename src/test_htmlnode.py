@@ -105,7 +105,7 @@ class TestHTMLNode(unittest.TestCase):
         node = ParentNode(
             "p",
             [
-                LeafNode("b", ""),
+                LeafNode("b", None),
                 LeafNode(None, "Normal text"),
                 LeafNode("i", "italic text"),
                 LeafNode("a", "Click me!", {"href": "https://www.google.com"}),
