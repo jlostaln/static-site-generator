@@ -7,6 +7,7 @@ from inline_markdown import (
         extract_markdown_images,
         split_nodes_image,
         split_nodes_link,
+        text_to_textnodes,
 )
 
 class TestInlineMarkdown(unittest.TestCase):
@@ -231,6 +232,25 @@ class TestInlineMarkdown(unittest.TestCase):
         self.assertListEqual(
             [
                 TextNode("This is text with a link ", TextType.TEXT),
+            ],
+            new_nodes,
+        )
+
+    def test_all(self):
+        text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+        new_nodes = text_to_textnodes(text)
+        self.assertListEqual(
+            [
+                TextNode("This is ", TextType.TEXT),
+                TextNode("text", TextType.BOLD),
+                TextNode(" with an ", TextType.TEXT),
+                TextNode("italic", TextType.ITALIC),
+                TextNode(" word and a ", TextType.TEXT),
+                TextNode("code block", TextType.CODE),
+                TextNode(" and an ", TextType.TEXT),
+                TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+                TextNode(" and a ", TextType.TEXT),
+                TextNode("link", TextType.LINK, "https://boot.dev"),
             ],
             new_nodes,
         )
