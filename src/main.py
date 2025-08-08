@@ -1,17 +1,17 @@
 from textnode import TextNode, TextType
 from copy_static import copy_static_to_public
-from generate_page import generate_page
+from generate_page import generate_page_recursively
 
 dir_path_static = "./static"
 dir_path_public = "./public"
-from_path = "./content/index.md"
+from_path = "./content"
 template_path = "./template.html"
-dest_path = "./public/index.html"
+dest_path = "./public"
 
 def main():
 
     copy_static_to_public(dir_path_static, dir_path_public)
-    generate_page(from_path, template_path, dest_path)
+    generate_page_recursively(from_path, template_path, dest_path)
 
 
 
