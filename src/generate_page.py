@@ -1,0 +1,28 @@
+import os
+from markdown_blocks import markdown_to_html_node
+
+def extract_title(markdown):
+    lines = markdown.splitlines()
+    for line in lines:
+        if line.startswith("# "):
+            return line.lstrip("# ").strip()
+    raise ValueError("Invalid markdown: No h1 header found!")
+
+
+def generate_page(from_path, template_path, dest_path):
+    print(f"Generating page from {from_path} to {dest_path} using {template_path}")
+    with open(from_path, "r") as f:
+        content = f.read()
+    with open(template_path, "r") as f:
+        template = f.read()
+    html_nodes = markdown_to_html_node(content)
+    html_string = html_nodes.to_html()
+    title = extract_title(content)
+    html_output = template.replace("{{ Title }}", title).replace("{{ Content }}", html_string)
+
+    parent_dir = os.path.dirname(dest_path)
+    os.makedirs(parent_dir, exist_ok=True)
+    with open(dest_path, "w") as f:
+        f.write(html_output)
+
+
