@@ -14,8 +14,6 @@ def copy_static_to_public(source, destination):
         destination_path = os.path.join(destination, item)
 
         if os.path.isdir(source_path):
-            # os.mkdir(destination_path)
-            # print(f"Directory {destination_path} copied.")
             copy_static_to_public(source_path, destination_path)
         else:
             shutil.copy(source_path, destination_path)
